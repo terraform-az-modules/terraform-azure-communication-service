@@ -5,13 +5,13 @@
 #
 
 # Name of this project
-name : Terraform Azure Module Template
+name : Terraform Azure Communication Service
 
 # License of this project
 license: "APACHE"
 
 # Canonical GitHub repo
-github_repo: terraform-az-modules/terraform-module-template
+github_repo: terraform-az-modules/terraform-azure-communication-service
 
 # Badges to display
 badges:
@@ -25,7 +25,7 @@ badges:
     image: "https://img.shields.io/badge/Changelog-blue"
     url: "CHANGELOG.md"
 
-# Prerequesties to display
+# Prerequisites to display
 prerequesties:
   - name: Terraform
     url: https://learn.hashicorp.com/terraform/getting-started/install.html
@@ -36,14 +36,34 @@ providers:
     url: https://azure.microsoft.com/
     version: ">= 3.116.0"
 
-#  description of this project
+# Description of this project
 description: |-
-  Terraform Azure Module Template to create new modules using this as baseline
+  Terraform Azure Communication Service module enables creation and management of Azure Communication Services,
+  including support for Email Communication Service and domain association.
 
 # How to use this project
-# How to use this project
 usage: |-
-  Here are some examples of how you can use this module in your inventory structure:
+  Here are some examples of how you can use this module in your infrastructure:
+
   ```hcl
-    locals {}
-    ```
+  provider "azurerm" {
+    features {}
+  }
+
+  module "resource_group" {
+    source      = "terraform-az-modules/resource-group/azure"
+    version     = "1.0.0"
+    name        = "core"
+    environment = "dev"
+    location    = "eastus"
+    label_order = ["name", "environment", "location"]
+  }
+
+  module "azcommunication" {
+    source              = "./../../"
+    name                = "core"
+    environment         = "dev"
+    resource_group_name = module.resource_group.resource_group_name
+    location            = "eastus"
+    enable_domain       = true
+  }
