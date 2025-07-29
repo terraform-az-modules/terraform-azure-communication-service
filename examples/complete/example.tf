@@ -24,5 +24,4 @@ module "azcommunication" {
   environment         = "dev"
   resource_group_name = module.resource_group.resource_group_name
   location            = "India"
-  enable_domain       = true
 }

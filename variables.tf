@@ -65,6 +65,17 @@ variable "repository" {
   }
 }
 
+variable "deployment_mode" {
+  type        = string
+  default     = "terraform"
+  description = "Specifies how the infrastructure/resource is deployed"
+}
+
+variable "extra_tags" {
+  type        = map(string)
+  default     = null
+  description = "Variable to pass extra tags."
+}
 ##-----------------------------------------------------------------------------
 ## Communication Service
 ##-----------------------------------------------------------------------------
@@ -80,21 +91,9 @@ variable "resource_group_name" {
   description = "The name of the resource group in which to create the virtual network. Changing this forces a new resource to be created."
 }
 
-variable "deployment_mode" {
-  type        = string
-  default     = "terraform"
-  description = "Specifies how the infrastructure/resource is deployed"
-}
-
-variable "extra_tags" {
-  type        = map(string)
-  default     = null
-  description = "Variable to pass extra tags."
-}
-
 variable "enable_domain" {
   type        = bool
-  default     = false
+  default     = true
   description = "Flag to create service domain."
 }
 variable "user_engagement_tracking_enabled" {
